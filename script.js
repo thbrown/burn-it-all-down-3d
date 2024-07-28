@@ -1,62 +1,5 @@
 "use strict";
 
-// Margin to prevent texture bleeding on the edges
-
-/*
-const M = .01;
-
-// Adjust the UV coordinates for the water texture
-const TEX_WATER = [
-  0 + M, 0 + M,       // (0, 0) -> (M, M)
-  0 + M, 1 - M,       // (0, 1) -> (M, 1 - M)
-  0.25 - M, 0 + M,    // (0.25, 0) -> (0.25 - M, M)
-  0 + M, 1 - M,       // (0, 1) -> (M, 1 - M)
-  0.25 - M, 1 - M,    // (0.25, 1) -> (0.25 - M, 1 - M)
-  0.25 - M, 0 + M     // (0.25, 0) -> (0.25 - M, M)
-];
-
-// Adjust the UV coordinates for the tree texture
-const TEX_TREE = [
-  0.25 + M, 0 + M,    // (0.25, 0) -> (0.25 + M, M)
-  0.5 - M, 0 + M,     // (0.5, 0) -> (0.5 - M, M)
-  0.25 + M, 1 - M,    // (0.25, 1) -> (0.25 + M, 1 - M)
-  0.25 + M, 1 - M,    // (0.25, 1) -> (0.25 + M, 1 - M)
-  0.5 - M, 0 + M,     // (0.5, 0) -> (0.5 - M, M)
-  0.5 - M, 1 - M      // (0.5, 1) -> (0.5 - M, 1 - M)
-];
-
-// Adjust the UV coordinates for the fire texture
-const TEX_FIRE = [
-  0.5 + M, 0 + M,     // (0.5, 0) -> (0.5 + M, M)
-  0.5 + M, 1 - M,     // (0.5, 1) -> (0.5 + M, 1 - M)
-  0.75 - M, 0 + M,    // (0.75, 0) -> (0.75 - M, M)
-  0.5 + M, 1 - M,     // (0.5, 1) -> (0.5 + M, 1 - M)
-  0.75 - M, 1 - M,    // (0.75, 1) -> (0.75 - M, 1 - M)
-  0.75 - M, 0 + M     // (0.75, 0) -> (0.75 - M, M)
-];
-
-// Adjust the UV coordinates for the star texture
-const TEX_STAR = [
-  0.75 + M, 0 + M,    // (0.75, 0) -> (0.75 + M, M)
-  1 - M, 0 + M,       // (1, 0) -> (1 - M, M)
-  0.75 + M, 1 - M,    // (0.75, 1) -> (0.75 + M, 1 - M)
-  0.75 + M, 1 - M,    // (0.75, 1) -> (0.75 + M, 1 - M)
-  1 - M, 0 + M,       // (1, 0) -> (1 - M, M)
-  1 - M, 1 - M        // (1, 1) -> (1 - M, 1 - M)
-];
-*/
-
-
-
-// TODO: if we are short on space, we can use these coords with some black outlines on the images
-//const M = .01;
-/*
-const TEX_WATER = [0, 0, 0, 1, 0.25, 0, 0, 1, 0.25, 1, 0.25, 0];
-const TEX_TREE = [0.25, 0, 0.5, 0, 0.25, 1, 0.25, 1, 0.5, 0, 0.5, 1];
-const TEX_FIRE = [0.5, 0, 0.5, 1, 0.75, 0, 0.5, 1, 0.75, 1, 0.75, 0];
-const TEX_STAR = [0.75, 0, 1, 0, 0.75, 1, 0.75, 1, 1, 0, 1, 1];
-*/
-
 const TEX_WATER = [0, 0, 0.25, 0, 0, 1, 0, 1, 0.25, 0, 0.25, 1];
 const TEX_TREE = [0.25, 0, 0.5, 0, 0.25, 1, 0.25, 1, 0.5, 0, 0.5, 1];
 const TEX_FIRE =  [0.5, 0, 0.75, 0, 0.5, 1, 0.5, 1, 0.75, 0, 0.75, 1];
@@ -68,8 +11,7 @@ const TEX_FIRE_I = [0.5, 0, 0.75, 0, 0.5, 1, 0.75, 0, 0.75, 1, 0.5, 1];
 const TEX_STAR_I = [0.75, 0, 1, 0, 0.75, 1, 1, 0, 1, 1, 0.75, 1];
 
 const MAX = 3;
-
-const INITIAL_FACE_COLORS = randStart(6);// [0, 0, 1, 0, 0, 0];
+const INITIAL_FACE_COLORS = randStart(6);
 
 function randStart(num) {
   const data = [];
@@ -121,43 +63,6 @@ function main() {
     drag = false;
   });
 
-  /*
-  const MAX = 4;
-  gl.canvas.addEventListener("click", (e) => {
-    if(cumulativeMovement > 10) {
-      return;
-    }
-    cumulativeMovement = 0;
-    switch(colorAtMouse) {
-      case 1:
-        faceState[0] = (faceState[0] + 1) % MAX;
-        break;
-      case 2:
-        faceState[1] = (faceState[1] + 1) % MAX;
-        break;
-      case 3:
-        faceState[2] = (faceState[2] + 1) % MAX;
-        break;
-      case 4:
-        faceState[3] = (faceState[3] + 1) % MAX;
-        break;
-      case 5:
-        faceState[4] = (faceState[4] + 1) % MAX;
-        break;
-      case 6:
-        faceState[5] = (faceState[5] + 1) % MAX;
-        break;
-      case 0:
-      case -1:
-        break;
-      default:
-        console.log("Unknown color", colorAtMouse);
-    }
-    updateTexture();
-    setTimeout(checkWin, 100);
-  });
-  */
-
   gl.canvas.addEventListener("click", (e) => {
     if (cumulativeMovement > 10) {
       return;
@@ -169,23 +74,6 @@ function main() {
         faceState[index] = (faceState[index] + 1) % MAX;
       });
     };
-
-    /*
-
-    // +1 sometimes
-      // 0 - back [0, 4, 2, 5, 3]
-      ...getTextureTile(faceTextures[0], true),
-      // 1 - front [1, 4, 2, 5, 3]
-      ...getTextureTile(faceTextures[1]),
-      // 2 - top [2, 4, 5, 0 , 1]
-      ...getTextureTile(faceTextures[2], true),
-      // 3 - bottom [3, 4, 5, 0, 1]
-      ...getTextureTile(faceTextures[3]),
-      // 4 - left [4, 2, 3, 0, 1]
-      ...getTextureTile(faceTextures[4], true),
-      // 5 - right [5, 2, 3, 0, 1]
-    */
-      console.log("colorAtMouse", colorAtMouse);
 
     switch (colorAtMouse) {
       case 1:
@@ -298,7 +186,6 @@ function main() {
   }
 
   async function loadImages() {
-    console.log(svgs);
     const promises = Array.from(svgs).map((svg, index) =>
       drawSVGToCanvas(svg, index * squareDim, 0)
     );
@@ -554,7 +441,6 @@ function setTexcoords(gl, faceTextures) {
 }
 
 function getTextureTile(index, invert = false) {
-  console.log("getTex", index, invert)
   if (index === 0) {
     return invert ? TEX_WATER_I : TEX_WATER;
   } else if (index === 1) {
